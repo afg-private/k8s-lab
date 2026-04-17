@@ -60,13 +60,6 @@ jobs:
     environment: staging
     steps:
       - uses: actions/checkout@v4
-      - name: Diagnóstico
-        run: |
-          echo "Usuário: $(whoami)"
-          echo "Home: $HOME"
-          echo "Kubeconfig: $KUBECONFIG"
-          ls -la $HOME/.kube/ || echo "pasta .kube não encontrada"
-          kubectl config view || echo "kubectl config falhou"
       - name: Atualizar imagem no staging
         run: |
           kubectl set image deployment/k8s-lab \
