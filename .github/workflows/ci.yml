@@ -54,16 +54,19 @@ jobs:
 
   deploy-staging:
     name: Deploy Staging
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     if: github.ref == 'refs/heads/main'
     environment: staging
     steps:
       - uses: actions/checkout@v4
-      - name: Configurar kubectl
+      - name: Diagnóstico
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+          echo "Usuário: $(whoami)"
+          echo "Home: $HOME"
+          echo "Kubeconfig: $KUBECONFIG"
+          ls -la $HOME/.kube/ || echo "pasta .kube não encontrada"
+          kubectl config view || echo "kubectl config falhou"
       - name: Atualizar imagem no staging
         run: |
           kubectl set image deployment/k8s-lab \
