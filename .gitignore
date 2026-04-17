@@ -2,3 +2,7 @@ actions-runner/
 __pycache__/
 *.pyc
 .env
+actions-runner/
+__pycache__/
+*.pyc
+.env
